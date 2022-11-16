@@ -28,6 +28,7 @@ nframe.columns = columnas
 hframe = dataframe.loc[62:114]
 columnas[0] = 'Hombres'
 hframe.columns = columnas
+print(columnas)
 #print(hframe)
 #mujeres frame
 mframe = dataframe.loc[116:168]
@@ -85,7 +86,57 @@ for y in range(i):
     varianza = varianza/len(tasa)
     print(f"La varianza es {varianza}")
     
-#Calcular media con map
-pmapa = nframe.iloc[0:i]
-map(lambda x: sum(x)/len(x), pmapa)
+#Dividir entre 100
+pmapa = nframe.iloc[1]
+print(type(pmapa))
 print(pmapa)
+pmapa = pmapa.map(lambda x: x if type(x) == str else x/100)
+print(pmapa)
+
+#Filter
+print("------------------")
+print(mframe.filter(regex='2002T1', axis=1))
+
+
+#Crea una base de datos SQLite desde python
+import sqlite3
+conn = sqlite3.connect('test.db')
+c = conn.cursor()
+#Crear tabla a partir de un dataframe
+print(hframe)
+import xlwt
+hframe.to_excel('hombres.xls')
+# 
+#Leer tabla
+# c.execute("SELECT * FROM dataframe")
+# print(c.fetchall())
+print(columnas)
+cSoloParo = columnas[1:84]
+print(cSoloParo)
+#Crear dataframe a partir de un dataframe de pandas y una lista de columnas
+dfSoloParo = hframe.iloc[1:84]
+dfSoloParo.to_excel('soloparo.xls')
+print("AJSDJDJAD")
+print(nframe.iloc[:,1:84])
+#Sacar filas de un dataframe
+print(nframe1)
+dfSoloParo.insert(0, "", nframe1.iloc[0])
+dfSoloParo.dropna()
+print(dfSoloParo.iloc[:,1:84].to_sql('dfSoloParo', conn, if_exists='replace'))
+dfSoloParo.to_excel('soloparo.xls')
+#dfSoloParo.to_sql('dfSoloParo', conn)
+#Leer tabla
+c.execute("SELECT * FROM dfSoloParo")
+print(c.fetchall())
+# Realiza al menos tres consultas distintas
+c.execute("SELECT Mujeres FROM dfSoloParo")
+print(c.fetchall())
+c.execute("SELECT Mujeres, 2022T3 FROM dfSoloParo")
+print(c.fetchall())
+#insertar serie en tabla existente
+#dfSoloParo.iloc[:,1:84].to_sql('dfSoloParo', conn, if_exists='append')
+
+
+
+# ● Guarda los datos de una de las consultas en un nuevo dataset
+# ● Guarda el nuevo dataset como una nueva tabla en la base de datos
