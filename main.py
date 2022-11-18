@@ -96,47 +96,72 @@ print(pmapa)
 #Filter
 print("------------------")
 print(mframe.filter(regex='2002T1', axis=1))
+print("------------------")
+# Crea una clase que tenga como atributos las columnas del dataframe
+fram2 = nframe1.iloc[:,1:84]
+#columnas
+print(fram2.index)
+class Tabla:
+    pass
+tabla = Tabla()
+for x in fram2.index:
+    setattr(tabla, f"i_{x}", fram2.loc[x])
+#print(tabla.__dict__)
+print(f"{tabla.i_2002T1}")
 
+#fram3 = hframe.transpose()
+fram3 = hframe.iloc[:,1:84]
+print(fram3)
+tabla2 = Tabla()
+print("fram3")
+print(fram3.index)
+for x in fram3.index:
+    setattr(tabla2, f"i_{x}", fram3.loc[x])
+print(f"{tabla2.i_2002T1}")
 
-#Crea una base de datos SQLite desde python
-import sqlite3
-conn = sqlite3.connect('test.db')
-c = conn.cursor()
-#Crear tabla a partir de un dataframe
-print(hframe)
-import xlwt
-hframe.to_excel('hombres.xls')
-# 
-#Leer tabla
-# c.execute("SELECT * FROM dataframe")
+# #Crea una base de datos SQLite desde python
+# import sqlite3
+# conn = sqlite3.connect('test.db')
+# c = conn.cursor()
+# #Crear tabla a partir de un dataframe
+# print(hframe)
+# import xlwt
+# hframe.to_excel('hombres.xls')
+# # 
+# #Leer tabla
+# # c.execute("SELECT * FROM dataframe")
+# # print(c.fetchall())
+# print(columnas)
+# cSoloParo = columnas[1:84]
+# print(cSoloParo)
+# #Crear dataframe a partir de un dataframe de pandas y una lista de columnas
+# dfSoloParo = hframe.iloc[1:84]
+# dfSoloParo.to_excel('soloparo.xls')
+# print("AJSDJDJAD")
+# print(nframe.iloc[:,1:84])
+# #Sacar filas de un dataframe
+# print(nframe1)
+# dfSoloParo.insert(0, "", nframe1.iloc[0])
+# dfSoloParo.dropna()
+# #84
+# print(dfSoloParo.iloc[:,1:42].to_sql('dfSoloParo', conn, if_exists='replace'))
+# dfSoloParo.to_excel('soloparo.xls')
+# #dfSoloParo.to_sql('dfSoloParo', conn)
+# #Leer tabla
+# c.execute("SELECT * FROM dfSoloParo")
 # print(c.fetchall())
-print(columnas)
-cSoloParo = columnas[1:84]
-print(cSoloParo)
-#Crear dataframe a partir de un dataframe de pandas y una lista de columnas
-dfSoloParo = hframe.iloc[1:84]
-dfSoloParo.to_excel('soloparo.xls')
-print("AJSDJDJAD")
-print(nframe.iloc[:,1:84])
-#Sacar filas de un dataframe
-print(nframe1)
-dfSoloParo.insert(0, "", nframe1.iloc[0])
-dfSoloParo.dropna()
-print(dfSoloParo.iloc[:,1:84].to_sql('dfSoloParo', conn, if_exists='replace'))
-dfSoloParo.to_excel('soloparo.xls')
-#dfSoloParo.to_sql('dfSoloParo', conn)
-#Leer tabla
-c.execute("SELECT * FROM dfSoloParo")
-print(c.fetchall())
-# Realiza al menos tres consultas distintas
-c.execute("SELECT Mujeres FROM dfSoloParo")
-print(c.fetchall())
-c.execute("SELECT Mujeres, 2022T3 FROM dfSoloParo")
-print(c.fetchall())
-#insertar serie en tabla existente
-#dfSoloParo.iloc[:,1:84].to_sql('dfSoloParo', conn, if_exists='append')
+# # Realiza al menos tres consultas distintas
+# c.execute("SELECT Mujeres FROM dfSoloParo")
+# print(c.fetchall())
+# # c.execute("SELECT Mujeres FROM dfSoloParo")
+# # print(c.fetchall())
+# #insertar serie en tabla existente
+# #dfSoloParo.iloc[:,1:84].to_sql('dfSoloParo', conn, if_exists='append')
 
 
+# # Guardar consulta en dataframe
+# df = pd.read_sql_query("SELECT * FROM dfSoloParo", conn)
+# print(df)
 
-# ● Guarda los datos de una de las consultas en un nuevo dataset
-# ● Guarda el nuevo dataset como una nueva tabla en la base de datos
+# # Guarda el nuevo dataframe como una nueva tabla en la base de datos
+# df.to_sql('dfSoloParo1', conn, if_exists='replace')
